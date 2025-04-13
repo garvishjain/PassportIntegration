@@ -3,10 +3,7 @@
 const postgreConnection = require("../apps/helpers/sequelizeHelpers");
 const {users, tokensessions} = require('../database/model');
 const bcrypt = require('bcrypt');
-// const { createWebToken } = require("../util/token");
 const {Jwt} = require('../apps/JWT/jwt')
-const passport = require('passport');
-const LocalStrategy = require('passport-local')
 
 module.exports = class UserService {
 //   static async LoginUser(objUser) {
@@ -48,33 +45,15 @@ module.exports = class UserService {
 //   }
 
     static async LoginUser(obj){
-        console.log(obj);
-        
-        passport.use(new LocalStrategy(
-            function(username, password, done) {
-                console.log(username,"<<username>>",password,"<<password>>");
-                
-              users.findOne({ email: username }, function (err, user) {
-                if (err) { return done(err); }
-                if (!user) { return done(null, false); }
-                if (!user.verifyPassword(password)) { return done(null, false); }
-                return done(null, user);
-              });
-            }
-        ));
-
-        passport.serializeUser((user,done)=>{
-            done(null, user.id);
-            })
-            
-            passport.deserializeUser(async(id, done)=>{
-            try {
-              const user = await Users.findById(id);
-            
-              done(null, user)
-            } catch (error) {
-              done(error,false);
-            }
-            })
+      try {
+        let payload = {
+          email: obj.email,
+          password: obj.password
+        }
+        let token = new Jwt().createToken(payload)
+        return {message:"Login Successfully.",result:obj,token}
+      } catch (error) {
+        throw error;
+      }
     }
 }

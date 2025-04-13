@@ -10,12 +10,10 @@ module.exports = class LoginController extends LoginService {
 
     static async login(req,res){
         try {
-            let obj = req.body;
-            
+            let obj = req.user;
             let userData = await super.LoginUser(obj);            
             if(userData){
-              // res.render('getUser',{message: userData.message})
-              // res.setHeader({token:userData.token})
+              res.setHeader("token",userData.token)
               successResponse(req,res, userData.message,userData.result)
             }else{
               errorResponse(req,res,userData.message,userData.result)

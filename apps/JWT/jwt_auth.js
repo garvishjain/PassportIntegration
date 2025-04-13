@@ -3,8 +3,6 @@ const { Jwt } = require('./jwt')
 
 const { unauthorizedResponse } = require('../helpers/customeResponseTemplate')
 // const {users, tokensessions} = require('../../database/model');
-const passport = require('passport');
-const LocalStrategy = require('passport-local')
 const {users} = require('../../database/model')
 
 
@@ -40,21 +38,6 @@ class Token {
       )
     }
   }
-
-  // static async PassPortAuthenticate(req,res,next){
-  //   passport.use(new LocalStrategy(
-  //     function(email, password, done) {
-  //         console.log(email,"<<email>>",password,"<<password>>");
-          
-  //       Users.findOne({ email: email }, function (err, user) {
-  //         if (err) { return done(err); }
-  //         if (!user) { return done(null, false); }
-  //         if (!user.verifyPassword(password)) { return done(null, false); }
-  //         return done(null, user);
-  //       });
-  //     }
-  // ));
-  // }
 }
 
 module.exports = Token

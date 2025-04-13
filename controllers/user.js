@@ -14,7 +14,6 @@ module.exports = class UserController extends UserService {
             let obj = req.body;
             let result = await super.CreateUser(obj); 
             if(result){
-                // res.render('signUpSignIn',{message: result.message})
                 successResponse(req,res, result.message,result.result)
             }else{
                 errorResponse(req,res,result.message,result.result)
@@ -22,7 +21,6 @@ module.exports = class UserController extends UserService {
         } catch (error) {
             console.log(error);
             internalServerErrorResponse(req,res,"SomeThing Went Wrong.",error)
-            // throw error;            
         }
     }
 
@@ -52,6 +50,5 @@ module.exports = class UserController extends UserService {
             console.log(error);
             internalServerErrorResponse(req,res,"SomeThing Went Wrong.",error)
         }
-    }
-    
+    }    
 }
